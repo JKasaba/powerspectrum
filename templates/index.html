@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CMB Spectrum Analyzer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .form-container {
+            flex: 1;  /* Allocates less space to the form */
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .output-container {
+            flex: 3;  /* Allocates more space to the output, making it larger */
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-left: 20px; /* Adds some space between the form and the output */
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+            color: #666;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+        span {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #444;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adjust Cosmological Parameters</h1>
+    <div class="container">
+        <div class="form-container">
+            <form id="params_form" method="post">
+                <label for="omega_b">Baryon Density (\(\Omega_b\)):</label>
+                <input type="range" id="omega_b" name="omega_b" min="0.01" max="0.0399" step="0.0001" value="{{ params['omega_b'] }}" oninput="updateDisplay('omega_b_value', this.value)" onchange="submitForm()">
+                <span id="omega_b_value">{{ params['omega_b'] }}</span>
+
+                <label for="omega_cdm">Cold Dark Matter Density (\(\Omega_{cdm}\)):</label>
+                <input type="range" id="omega_cdm" name="omega_cdm" min="0.1" max="0.2" step="0.001" value="{{ params['omega_cdm'] }}" oninput="updateDisplay('omega_cdm_value', this.value)" onchange="submitForm()">
+                <span id="omega_cdm_value">{{ params['omega_cdm'] }}</span>
+
+                <label for="h">Hubble Parameter (h):</label>
+                <input type="range" id="h" name="h" min="0.5" max="0.9" step="0.01" value="{{ params['h'] }}" oninput="updateDisplay('h_value', this.value)" onchange="submitForm()">
+                <span id="h_value">{{ params['h'] }}</span>
+            </form>
+        </div>
+        <div class="output-container">
+            {% if plot_url %}
+                <h2>Resulting CMB TT Power Spectrum</h2>
+                <img src="{{ plot_url }}" alt="CMB TT Power Spectrum">
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function updateDisplay(id, value) {
+            document.getElementById(id).textContent = value;
+        }
+
+        function submitForm() {
+            document.getElementById('params_form').submit();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+

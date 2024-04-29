@@ -1,0 +1,26 @@
+altgraph @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/altgraph-0.17.2-py2.py3-none-any.whl
+blinker==1.7.0
+classy==3.2.3.2
+click==8.1.7
+contourpy==1.2.1
+cycler==0.12.1
+Flask==3.0.3
+fonttools==4.51.0
+future @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/future-0.18.2-py3-none-any.whl
+importlib_metadata==7.1.0
+importlib_resources==6.4.0
+itsdangerous==2.2.0
+Jinja2==3.1.3
+kiwisolver==1.4.5
+macholib @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/macholib-1.15.2-py2.py3-none-any.whl
+MarkupSafe==2.1.5
+matplotlib==3.8.4
+numpy==1.26.4
+packaging==24.0
+pillow==10.3.0
+pyparsing==3.1.2
+python-dateutil==2.9.0.post0
+scipy==1.13.0
+six @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/six-1.15.0-py2.py3-none-any.whl
+Werkzeug==3.0.2
+zipp==3.18.1
