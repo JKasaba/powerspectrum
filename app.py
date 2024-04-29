@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import matplotlib
-matplotlib.use('Agg')  # This needs to be done before importing pyplot
+matplotlib.use('Agg')  # This ensures matplotlib uses a non-GUI backend
 import matplotlib.pyplot as plt
 from classy import Class
 import numpy as np
@@ -15,31 +15,28 @@ def index():
         'omega_b': 0.0224,
         'omega_cdm': 0.12,
         'h': 0.67,
+        'A_s': 2.3e-9,
+        'n_s': 0.96,
+        'tau_reio': 0.07,
+        'output': 'tCl pCl lCl',
+        'modes': 's',
+        'lensing': 'yes',
+        'l_max_scalars': 2500,
     }
-    if request.method == 'POST':
-        try:
-            params = {
-                'output': 'tCl pCl lCl',
-                'modes': 's',
-                'lensing': 'yes',
-                'l_max_scalars': 2500,
-                'omega_b': float(request.form.get('omega_b', default_params['omega_b'])),
-                'omega_cdm': float(request.form.get('omega_cdm', default_params['omega_cdm'])),
-                'h': float(request.form.get('h', default_params['h'])),
-                'A_s': 2.3e-9,
-                'n_s': 0.96,
-                'tau_reio': 0.07,
-            }
-            plot_url = generate_plot(params)
-            # Update default params to reflect submitted values
-            default_params.update(params)
-        except Exception as e:
-            print(f"Error: {e}")
-            plot_url = None
-    else:
-        plot_url = None
-    return render_template('index.html', plot_url=plot_url, params=default_params)
 
+    if request.method == 'POST':
+        # Update parameters with values from the form
+        for key in default_params.keys():
+            if key in request.form and request.form[key]:
+                try:
+                    default_params[key] = float(request.form[key])
+                except ValueError:
+                    pass  # Handle the exception if the conversion fails
+
+    # Generate the plot with either default or updated parameters
+    plot_url = generate_plot(default_params)
+
+    return render_template('index.html', plot_url=plot_url, params=default_params)
 
 def generate_plot(params):
     cosmo = Class()
@@ -49,7 +46,7 @@ def generate_plot(params):
     ell = cls['ell']
     cl_TT = cls['tt']
 
-    start_index = np.where(ell >= 2)[0][0]
+    start_index = np.where(ell >= 2)[0][0]  # Ensure the plot starts from ell >= 2
     ell = ell[start_index:]
     cl_TT = cl_TT[start_index:]
 
@@ -66,6 +63,7 @@ def generate_plot(params):
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode('utf-8')
 
+    plt.close()  # Close the plot to free up memory
     cosmo.struct_cleanup()
     cosmo.empty()
 
