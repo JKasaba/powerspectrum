@@ -1,4 +1,4 @@
-Any questions about maintainaibity please reach out to kasaba@usc.edu or james@kasaba.org if that address is expired
+Any questions about maintainability please reach out to kasaba@usc.edu or james@kasaba.org if that address is expired
 
 This webapp uses classy to generate a TT power spectrum based on cosmological parameters
 
